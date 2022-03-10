@@ -8,12 +8,12 @@
     xmlns="http://www.w3.org/2000/svg">
     <path
       d="M19 11V20.4C19 20.7314 18.7314 21 18.4 21H5.6C5.26863 21 5 20.7314 5 20.4V11"
-      stroke="currentColor"
+      :stroke="currentColor"
       stroke-linecap="round"
       stroke-linejoin="round" />
     <path
       d="M10 17V11"
-      stroke="currentColor"
+      :stroke="currentColor"
       stroke-linecap="round"
       stroke-linejoin="round" />
     <path

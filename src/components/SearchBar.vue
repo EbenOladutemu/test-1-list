@@ -1,13 +1,11 @@
 <template>
-  <div>
-    <input
-      type="text"
-      placeholder="Search or Add..."
-      :value="modelValue"
-      @input="$emit('update:modelValue', $event.target.value)" />
-    <Cancel :class="[$style.icon, $style.cancel]" />
-    <Add :class="[$style.icon]" />
-  </div>
+  <input
+    type="text"
+    placeholder="Search or Add..."
+    :value="modelValue"
+    @input="$emit('update:modelValue', $event.target.value)" />
+  <Cancel :class="[$style.icon, $style.cancel]" />
+  <Add :class="$style.icon" />
 </template>
 
 <script lang="ts" setup>
@@ -27,25 +25,21 @@ defineProps({
 
 <style lang="scss" module>
 @use 'sass/color';
+@use 'sass/icon';
+@use 'sass/utilities';
 
 input {
-  background: color.$searchbar-background;
+  background: utilities.$searchbar-background;
   border-radius: 6px;
   width: 100%;
   padding: 1rem;
   border: none;
   outline: none;
   color: color.$text;
+  letter-spacing: 0.5px;
 }
-.icon {
-  background: color.$searchbar-background;
-  float: right;
-  margin-top: -2.5rem;
-  z-index: 3;
-  position: relative;
-  margin-right: 1rem;
-}
-.cancel {
-  margin-right: 4rem;
+
+::placeholder {
+  color: color.$text-secondary;
 }
 </style>

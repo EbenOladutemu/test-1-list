@@ -1,0 +1,30 @@
+@use 'sass/color';
+@use 'sass/utilities';
+
+.icon {
+  background: utilities.$searchbar-background;
+  float: right;
+  margin-top: -2.5rem;
+  z-index: 3;
+  position: relative;
+  margin-right: 1rem;
+  cursor: pointer;
+}
+
+.cancel {
+  margin-right: 4rem;
+}
+
+.trash {
+  top: 4rem;
+  background-color: transparent;
+
+  &:hover + li {
+    background-color: color.$text-white;
+    box-shadow: utilities.$list-box-shadow;
+    .time {
+      margin-right: 4rem;
+      transition: margin-right 0.5s;
+    }
+  }
+}
