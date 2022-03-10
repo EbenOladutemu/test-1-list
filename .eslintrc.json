@@ -2,7 +2,7 @@
   "root": true,
   "env": { "node": true },
   "extends": ["eslint:recommended", "@vue/prettier"],
-  "parserOptions": { "ecmaVersion": 2020 },
+  "parserOptions": { "sourceType": "module", "ecmaVersion": 2020 },
 
   // Find and fix JavaScript problems in the code. This rule-set is applied to
   // typescript as well, however typescript has additional rules below. For full

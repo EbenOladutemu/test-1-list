@@ -23,4 +23,20 @@ html {
 }
 
 // If you need to style the #app element
-// :global(#app) {}
+:global(#app) {
+  height: 100vh;
+  background: color.$app-background;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 1rem;
+}
+
+@media screen and (min-width: 768px) {
+  :global(.container) {
+    width: 50%;
+    margin: 0 auto;
+  }
+  :global(#app) {
+    padding: 4rem;
+  }
+}

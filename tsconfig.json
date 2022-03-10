@@ -8,6 +8,7 @@
     "lib": ["esnext", "dom", "dom.iterable", "scripthost"],
     "module": "esnext",
     "moduleResolution": "node",
+    "noImplicitAny": false,
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
@@ -20,6 +21,6 @@
     "src/**/*.vue",
     "tests/**/*.ts",
     "tests/**/*.tsx"
-  ],
+, "src/composables/currentColor.js"  ],
   "exclude": ["node_modules"]
 }
