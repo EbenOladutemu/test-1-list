@@ -1,32 +1,34 @@
 <template>
   <ul>
-    <Trash :class="[$style.icon, $style.trash]" />
-    <li class="d-flex-align-center">
+    <li
+      v-for="list in lists"
+      :key="list.id"
+      class="d-flex-align-center"
+      @click="getList(list)">
       <div>
-        <p :class="$style.name">John Smith</p>
-        <small :class="$style['serial-no']">#2</small>
+        <p :class="$style.name">{{ list.name }}</p>
+        <small :class="$style['serial-no']">#{{ list.id }}</small>
       </div>
-      <span :class="$style.time">2 minutes ago</span>
-    </li>
-    <li class="d-flex-align-center">
-      <div>
-        <p :class="$style.name">John Smith</p>
-        <small :class="$style['serial-no']">#2</small>
+      <div class="d-flex-align-center">
+        <span :class="$style.time">{{ list.time }} minutes ago</span>
+        <Trash :class="$style.trash" />
       </div>
-      <span :class="$style.time">2 minutes ago</span>
-    </li>
-    <li class="d-flex-align-center">
-      <div>
-        <p :class="$style.name">John Smith</p>
-        <small :class="$style['serial-no']">#2</small>
-      </div>
-      <span :class="$style.time">2 minutes ago</span>
     </li>
   </ul>
 </template>
 
 <script lang="ts" setup>
+import { defineProps } from 'vue';
+
 import Trash from './icons/Trash.vue';
+
+const props = defineProps<{
+  lists?: any[];
+}>();
+
+const getList = (e: any) => {
+  console.log(e);
+};
 </script>
 
 <style lang="scss" module>
@@ -45,14 +47,20 @@ li {
   justify-content: space-between;
   border-bottom: 1px solid color.$border-color;
   border-radius: utilities.$border-radius;
+  background: transparent;
+  transition: background 0.5s;
   cursor: pointer;
 
   &:hover {
     background: color.$text-white 0% 0% no-repeat padding-box;
     box-shadow: utilities.$list-box-shadow;
+    transition: background 0.5s;
     .time {
-      margin-right: 4rem;
+      margin-right: 2rem;
       transition: margin-right 0.5s;
+    }
+    .trash {
+      opacity: 1;
     }
   }
 }
@@ -66,6 +74,7 @@ li {
 }
 .time {
   font-size: 13px;
+  margin-right: -1rem;
   transition: margin-right 0.5s;
 }
 </style>

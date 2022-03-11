@@ -32,5 +32,5 @@
 <script lang="ts" setup>
 import { useCurrentColor } from 'composables/currentColor.js';
 
-const { currentColor } = useCurrentColor('#FA5252');
+const { currentColor } = useCurrentColor('#fa5252');
 </script>

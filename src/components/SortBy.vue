@@ -28,6 +28,7 @@ export default {};
   border-radius: 6px;
   background-color: color.$text-white;
   width: 13rem;
+  font-size: 13px;
   cursor: pointer;
 
   &:hover {

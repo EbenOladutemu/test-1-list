@@ -21,9 +21,19 @@
 </template>
 
 <script lang="ts" setup>
+import { defineProps } from 'vue';
 import { useCurrentColor } from 'composables/currentColor.js';
 
-const { currentColor } = useCurrentColor('#ADB5BD');
+const props = defineProps({
+  match: {
+    type: Boolean,
+    required: true,
+  },
+});
+
+const { currentColor } = props.match
+  ? useCurrentColor('#12b886')
+  : useCurrentColor('#adb5bd');
 </script>
 
 <style></style>

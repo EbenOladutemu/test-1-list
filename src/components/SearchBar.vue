@@ -1,26 +1,41 @@
 <template>
-  <input
-    type="text"
-    placeholder="Search or Add..."
-    :value="modelValue"
-    @input="$emit('update:modelValue', $event.target.value)" />
-  <Cancel :class="[$style.icon, $style.cancel]" />
-  <Add :class="$style.icon" />
+  <div class="d-flex-align-center">
+    <input
+      type="text"
+      placeholder="Search or Add..."
+      :value="modelValue"
+      @input="enterValue($event)"
+      @keydown="clear($event)" />
+    <div :class="$style.icon">
+      <Cancel id="clear" data-test="clear" @click.enter="clear($event)" />
+      <Add :class="$style.add" :match="foundMatch" />
+    </div>
+  </div>
 </template>
 
 <script lang="ts" setup>
-import { defineEmits, defineProps } from 'vue';
+import { defineEmits, defineProps, ref } from 'vue';
 
 import Add from './icons/Add.vue';
 import Cancel from './icons/Cancel.vue';
 
-defineEmits(['update:modelValue']);
-defineProps({
-  modelValue: {
-    type: String,
-    required: true,
-  },
-});
+const emits = defineEmits(['update:modelValue']);
+const props = defineProps<{
+  modelValue: string;
+}>();
+
+const foundMatch = ref(false);
+
+const enterValue = (e: any) => {
+  emits('update:modelValue', e.target.value);
+};
+
+const clear = (e: any) => {
+  if (e.key === 'Escape' || e.target.id === 'clear') {
+    console.log('Clear input');
+    emits('update:modelValue', '');
+  }
+};
 </script>
 
 <style lang="scss" module>
