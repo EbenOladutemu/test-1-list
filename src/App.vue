@@ -1,16 +1,36 @@
 <template>
   <div class="container">
-    <SearchBar v-model="searchQuery" />
-    <List :lists="filteredList" />
+    <SearchBar
+      v-model="searchQuery"
+      :lists="filteredList"
+      @keydown="
+        add($event);
+        clear($event);
+      ">
+      <button v-if="searchQuery">
+        <Cancel id="clear" @click.enter="clear($event)" />
+      </button>
+      <button v-if="searchQuery" :disabled="!empty">
+        <Add
+          id="add"
+          :class="$style.add"
+          :not-found="!empty"
+          @click="add($event)" />
+      </button>
+    </SearchBar>
+    <List :search-query="searchQuery" :lists="filteredList" />
   </div>
-  <SortBy />
+  <SortBy :lists="lists" />
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed } from 'vue';
+import { defineComponent, ref, computed, onUnmounted } from 'vue';
+import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 
 import List from './components/List.vue';
 import SearchBar from './components/SearchBar.vue';
+import Add from './components/icons/Add.vue';
+import Cancel from './components/icons/Cancel.vue';
 import SortBy from './components/SortBy.vue';
 
 export default defineComponent({
@@ -18,37 +38,53 @@ export default defineComponent({
   components: {
     List,
     SearchBar,
+    Add,
+    Cancel,
     SortBy,
   },
   setup() {
     const searchQuery = ref('');
-    const lists = ref([
-      {
-        id: 1,
-        name: 'John Smith',
-        time: '10',
-      },
-      {
-        id: 2,
-        name: 'Mary Ann',
-        time: '5',
-      },
-      {
-        id: 3,
-        name: 'Doughnut Fluffy',
-        time: '2',
-      },
-    ]);
+    const lists: any = ref(JSON.parse(localStorage.getItem('lists')));
 
     const filteredList = computed(() => {
-      return lists.value.filter((list) =>
-        list.name.match(new RegExp(searchQuery.value, 'i'))
-      );
+      return lists.value.length > 0
+        ? lists.value.filter((list: any) =>
+            list.name.match(new RegExp(searchQuery.value, 'i'))
+          )
+        : [];
     });
 
+    const empty = computed(() => {
+      return filteredList.value.length === 0 ? true : false;
+    });
+
+    const add = (e: any) => {
+      if (empty.value && (e.key === 'Enter' || e.target.id === 'add')) {
+        lists.value.push({
+          id: lists.value.length + 1,
+          name: searchQuery.value,
+          time: formatDistanceToNow(new Date(Date.now()), {
+            includeSeconds: true,
+          }),
+        });
+        localStorage.setItem('lists', JSON.stringify(lists.value));
+        searchQuery.value = '';
+      }
+    };
+
+    const clear = (e: any) => {
+      if (e.key === 'Escape' || e.target.id === 'clear') {
+        searchQuery.value = '';
+      }
+    };
+
     return {
+      lists,
       searchQuery,
       filteredList,
+      empty,
+      add,
+      clear,
     };
   },
 });
@@ -56,4 +92,7 @@ export default defineComponent({
 
 <style lang="scss" module>
 // Style
+.add {
+  margin-left: 2rem;
+}
 </style>

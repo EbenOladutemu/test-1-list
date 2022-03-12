@@ -1,33 +1,50 @@
 <template>
   <ul>
-    <li
-      v-for="list in lists"
-      :key="list.id"
-      class="d-flex-align-center"
-      @click="getList(list)">
-      <div>
-        <p :class="$style.name">{{ list.name }}</p>
-        <small :class="$style['serial-no']">#{{ list.id }}</small>
+    <li v-for="list in lists" :key="list.id" class="d-flex-align-center">
+      <div class="d-flex-align-center">
+        <Check v-show="exactMatch" :class="$style.check" />
+        <div>
+          <p :class="$style.name">{{ list.name }}</p>
+          <small :class="$style['serial-no']">
+            <span v-show="exactMatch"> Exact match, </span>
+            #{{ list.id }}
+          </small>
+        </div>
       </div>
       <div class="d-flex-align-center">
-        <span :class="$style.time">{{ list.time }} minutes ago</span>
-        <Trash :class="$style.trash" />
+        <span :class="$style.time">{{ list.time }} ago</span>
+        <Trash :class="$style.trash" @click="getList(list)" />
       </div>
     </li>
   </ul>
 </template>
 
 <script lang="ts" setup>
-import { defineProps } from 'vue';
+import { defineProps, ref, computed } from 'vue';
 
 import Trash from './icons/Trash.vue';
+import Check from './icons/Check.vue';
 
 const props = defineProps<{
-  lists?: any[];
+  searchQuery: string;
+  lists: any[];
 }>();
 
+const listArray = ref(props.lists);
+
+const names: any = ref([]);
+listArray.value?.forEach((list) => {
+  names.value.push(list.name.toLowerCase());
+});
+
+const exactMatch = computed(() => {
+  return names.value.includes(props.searchQuery.toLowerCase());
+});
+
 const getList = (e: any) => {
-  console.log(e);
+  console.log(e, listArray.value);
+  listArray.value?.pop();
+  // return listArray.value?.splice(e);
 };
 </script>
 
@@ -71,6 +88,10 @@ li {
 .serial-no {
   font-size: 12px;
   color: color.$text-tertiary;
+
+  span {
+    color: color.$text-success;
+  }
 }
 .time {
   font-size: 13px;

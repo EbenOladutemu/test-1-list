@@ -24,15 +24,12 @@
 import { defineProps } from 'vue';
 import { useCurrentColor } from 'composables/currentColor.js';
 
-const props = defineProps({
-  match: {
-    type: Boolean,
-    required: true,
-  },
-});
+const props = defineProps<{
+  notFound: boolean;
+}>();
 
-const { currentColor } = props.match
-  ? useCurrentColor('#12b886')
+const { currentColor } = props.notFound
+  ? useCurrentColor('#15AABF')
   : useCurrentColor('#adb5bd');
 </script>
 

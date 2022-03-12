@@ -7,13 +7,26 @@
   background: utilities.$searchbar-background;
   position: relative;
   z-index: 3;
+
+  button {
+    padding: 0;
+    outline: none;
+    border: none;
+    background: none;
+    &:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+  }
+
   svg {
     cursor: pointer;
   }
 }
 
-.add {
-  margin-left: 2rem;
+.check {
+  background-color: transparent;
+  margin-right: 1rem;
 }
 
 .trash {

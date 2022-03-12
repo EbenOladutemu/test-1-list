@@ -4,37 +4,24 @@
       type="text"
       placeholder="Search or Add..."
       :value="modelValue"
-      @input="enterValue($event)"
-      @keydown="clear($event)" />
+      @input="enterValue($event)" />
     <div :class="$style.icon">
-      <Cancel id="clear" data-test="clear" @click.enter="clear($event)" />
-      <Add :class="$style.add" :match="foundMatch" />
+      <slot />
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { defineEmits, defineProps, ref } from 'vue';
-
-import Add from './icons/Add.vue';
-import Cancel from './icons/Cancel.vue';
+import { defineEmits, defineProps } from 'vue';
 
 const emits = defineEmits(['update:modelValue']);
-const props = defineProps<{
+
+defineProps<{
   modelValue: string;
 }>();
 
-const foundMatch = ref(false);
-
 const enterValue = (e: any) => {
   emits('update:modelValue', e.target.value);
-};
-
-const clear = (e: any) => {
-  if (e.key === 'Escape' || e.target.id === 'clear') {
-    console.log('Clear input');
-    emits('update:modelValue', '');
-  }
 };
 </script>
 

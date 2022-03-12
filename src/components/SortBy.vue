@@ -1,20 +1,56 @@
 <template>
   <div :class="$style['sort-by']">
-    <p :class="$style['sort-by-inner']">
+    <p
+      v-for="sortBy in sortByArray"
+      :key="sortBy.id"
+      :class="[
+        $style['sort-by-inner'],
+        { white: sortBy.by === selectedMethod },
+      ]"
+      @click="sortByMethod(sortBy.by)">
       <span>Sort by </span>
-      <span>Value</span>
-      <span>•</span>
-    </p>
-    <p :class="$style['sort-by-inner']">
-      <span>Sort by </span>
-      <span>Added Date</span>
-      <span>•</span>
+      <span>{{ sortBy.by }}</span>
+      <span v-show="sortBy.by === selectedMethod">•</span>
     </p>
   </div>
 </template>
 
-<script>
-export default {};
+<script lang="ts" setup>
+import { defineProps, ref } from 'vue';
+
+const props = defineProps<{
+  lists: any[];
+}>();
+
+const sortByArray = ref([
+  {
+    id: 1,
+    by: 'Value',
+  },
+  {
+    id: 2,
+    by: 'Added Date',
+  },
+]);
+
+const sortedLists = ref(props.lists);
+
+const selectedMethod = ref(localStorage.getItem('selectedMethod'));
+
+const sortByMethod = (e: any) => {
+  selectedMethod.value = e;
+  localStorage.setItem('selectedMethod', e);
+
+  if (selectedMethod.value === 'Value') {
+    sortedLists.value.sort((a, b) => {
+      const first = a.name.toLowerCase(),
+        second = b.name.toLowerCase();
+      return first < second ? -1 : 0;
+    });
+  } else {
+    console.log(e);
+  }
+};
 </script>
 
 <style lang="scss" module>
@@ -26,13 +62,12 @@ export default {};
 .sort-by-inner {
   padding: 1rem;
   border-radius: 6px;
-  background-color: color.$text-white;
   width: 13rem;
   font-size: 13px;
   cursor: pointer;
 
   &:hover {
-    background-color: color.$text-off-white;
+    background-color: color.$text-white;
   }
 
   &:active {
