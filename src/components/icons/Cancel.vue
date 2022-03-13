@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts" setup>
-import { useCurrentColor } from 'composables/currentColor.js';
+import { useCurrentColor } from 'composables/currentColor';
 
 const { currentColor } = useCurrentColor('#fa5252');
 </script>

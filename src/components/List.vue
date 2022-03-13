@@ -25,7 +25,6 @@
 import { defineProps, ref, computed } from 'vue';
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 
-// import Trash from './icons/Trash.vue';
 import Check from './icons/Check.vue';
 
 const props = defineProps<{

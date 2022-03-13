@@ -21,6 +21,6 @@
     "src/**/*.vue",
     "tests/**/*.ts",
     "tests/**/*.tsx"
-, "src/composables/currentColor.js"  ],
+, "src/composables/currentColor.ts"  ],
   "exclude": ["node_modules"]
 }

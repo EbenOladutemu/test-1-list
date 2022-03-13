@@ -29,7 +29,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, computed } from 'vue';
-import { setLists, getLists } from './composables/store.js';
+import { setLists, getLists } from './composables/store';
 
 import List from './components/List.vue';
 import SearchBar from './components/SearchBar.vue';

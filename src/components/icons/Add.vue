@@ -22,7 +22,7 @@
 
 <script lang="ts" setup>
 import { defineProps } from 'vue';
-import { useCurrentColor } from 'composables/currentColor.js';
+import { useCurrentColor } from 'composables/currentColor';
 
 const props = defineProps<{
   notFound: boolean;

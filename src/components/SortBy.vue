@@ -17,11 +17,7 @@
 
 <script lang="ts" setup>
 import { defineProps, ref } from 'vue';
-import {
-  setLists,
-  setSortMethod,
-  getSortMethod,
-} from './../composables/store.js';
+import { setLists, setSortMethod, getSortMethod } from './../composables/store';
 
 const props = defineProps<{
   lists: any[];
@@ -52,13 +48,15 @@ const sortByMethod = (method: any) => {
         second = b.name.toLowerCase();
       return first < second ? -1 : 0;
     });
+
     setLists(sortedLists.value);
   } else {
     sortedLists.value.sort((a, b) => {
       const first = new Date(a.time),
         second = new Date(b.time);
-      return first - second;
+      return first.valueOf() - second.valueOf();
     });
+
     setLists(sortedLists.value);
   }
 };
