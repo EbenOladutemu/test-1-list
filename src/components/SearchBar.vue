@@ -28,11 +28,11 @@ const enterValue = (e: any) => {
 <style lang="scss" module>
 @use 'sass/color';
 @use 'sass/icon';
-@use 'sass/utilities';
+@use 'sass/utils';
 
 input {
-  background: utilities.$searchbar-background;
-  border-radius: 6px;
+  background: utils.$searchbar-background;
+  border-radius: utils.$border-radius;
   width: 100%;
   padding: 1rem;
   border: none;

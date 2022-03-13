@@ -1,5 +1,5 @@
 @use 'sass/color';
-@use 'sass/utilities';
+@use 'sass/utils';
 
 @import url('//fonts.googleapis.com/css2?family=Open+Sans&display=swap');
 
@@ -14,7 +14,7 @@ body {
   margin: 0;
   padding: 0;
   height: 100%;
-  background: utilities.$app-background;
+  background: utils.$app-background;
 }
 
 html {
@@ -38,17 +38,9 @@ html {
   align-items: center;
 }
 
-:global(.white) {
-  background-color: color.$text-white;
-}
 @media screen and (min-width: 768px) {
-  :global(.container) {
-    width: 50%;
-    margin: 0 5rem;
-  }
   :global(#app) {
     padding: 4rem;
-    display: flex;
     flex-direction: row;
     justify-content: center;
   }

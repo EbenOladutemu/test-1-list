@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div :class="$style.container">
     <SearchBar
       v-model="searchQuery"
       :lists="filteredList"
@@ -29,7 +29,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, computed } from 'vue';
-import { setLists, getLists } from './composables/store';
+import { setLists, getLists } from './utils/store';
 
 import List from './components/List.vue';
 import SearchBar from './components/SearchBar.vue';
@@ -102,6 +102,12 @@ export default defineComponent({
 
 <style lang="scss" module>
 // Style
+@media screen and (min-width: 768px) {
+  .container {
+    width: 50%;
+    margin: 0 5rem;
+  }
+}
 .add {
   margin-left: 2rem;
 }

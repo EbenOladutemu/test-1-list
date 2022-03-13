@@ -3,9 +3,7 @@ export const setLists = (lists: any[]): any => {
 };
 
 export const getLists = (): any => {
-  return localStorage.getItem('lists')
-    ? JSON.parse(localStorage.getItem('lists'))
-    : [];
+  return JSON.parse(localStorage.getItem('lists') || '[]');
 };
 
 export const setSortMethod = (sortMethod: string): any => {

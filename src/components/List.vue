@@ -47,7 +47,7 @@ const exactMatch = computed(() => {
 <style lang="scss" module>
 @use 'sass/color';
 @use 'sass/icon';
-@use 'sass/utilities';
+@use 'sass/utils';
 
 ul {
   padding-left: 0;
@@ -59,14 +59,14 @@ li {
   list-style: none;
   justify-content: space-between;
   border-bottom: 1px solid color.$border-color;
-  border-radius: utilities.$border-radius;
+  border-radius: utils.$border-radius;
   background: transparent;
   transition: background 0.5s;
   cursor: pointer;
 
   &:hover {
     background: color.$text-white 0% 0% no-repeat padding-box;
-    box-shadow: utilities.$list-box-shadow;
+    box-shadow: utils.$list-box-shadow;
     transition: background 0.5s;
     .time {
       margin-right: 2rem;

@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts" setup>
-import { useCurrentColor } from 'composables/currentColor';
+import { useCurrentColor } from 'utils/currentColor';
 
 const { currentColor } = useCurrentColor('#12b886');
 </script>

@@ -1,10 +1,10 @@
 @use 'sass/color';
-@use 'sass/utilities';
+@use 'sass/utils';
 
 .icon {
   display: flex;
   margin-left: -7rem;
-  background: utilities.$searchbar-background;
+  background: utils.$searchbar-background;
   position: relative;
   z-index: 3;
 

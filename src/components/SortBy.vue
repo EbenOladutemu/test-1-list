@@ -5,7 +5,7 @@
       :key="sortBy.id"
       :class="[
         $style['sort-by-inner'],
-        { white: sortBy.by === selectedMethod },
+        { [$style['bg-white']]: sortBy.by === selectedMethod },
       ]"
       @click="sortByMethod(sortBy.by)">
       <span>Sort by </span>
@@ -17,7 +17,7 @@
 
 <script lang="ts" setup>
 import { defineProps, ref } from 'vue';
-import { setLists, setSortMethod, getSortMethod } from './../composables/store';
+import { setLists, setSortMethod, getSortMethod } from './../utils/store';
 
 const props = defineProps<{
   lists: any[];
@@ -54,7 +54,7 @@ const sortByMethod = (method: any) => {
     sortedLists.value.sort((a, b) => {
       const first = new Date(a.time),
         second = new Date(b.time);
-      return first.valueOf() - second.valueOf();
+      return second.valueOf() - first.valueOf();
     });
 
     setLists(sortedLists.value);
@@ -64,13 +64,14 @@ const sortByMethod = (method: any) => {
 
 <style lang="scss" module>
 @use 'sass/color';
+@use 'sass/utils';
 .sort-by {
   height: fit-content;
   margin-top: 2rem;
 }
 .sort-by-inner {
   padding: 1rem;
-  border-radius: 6px;
+  border-radius: utils.$border-radius;
   width: 13rem;
   font-size: 13px;
   cursor: pointer;
@@ -95,5 +96,9 @@ const sortByMethod = (method: any) => {
     color: color.$text-success;
     float: right;
   }
+}
+
+.bg-white {
+  background-color: color.$text-white;
 }
 </style>
