@@ -67,8 +67,9 @@ export default defineComponent({
     const add = (e: any) => {
       if (empty.value && (e.key === 'Enter' || e.target.id === 'add')) {
         lists.value.push({
-          id: lists.value.length + 1,
+          id: Math.floor(Math.random() * 1000),
           name: searchQuery.value,
+          number: lists.value.length + 1,
           time: new Date(),
         });
         setLists(lists.value);

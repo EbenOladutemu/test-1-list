@@ -7,7 +7,7 @@
           <p :class="$style.name">{{ list.name }}</p>
           <small :class="$style['serial-no']">
             <span v-show="exactMatch"> Exact match, </span>
-            #{{ list.id }}
+            #{{ list.number }}
           </small>
         </div>
       </div>
