@@ -12,8 +12,10 @@
         </div>
       </div>
       <div class="d-flex-align-center">
-        <span :class="$style.time">{{ list.time }} ago</span>
-        <Trash :class="$style.trash" @click="getList(list)" />
+        <span :class="$style.time">
+          {{ formatDistanceToNow(new Date(list.time), { addSuffix: true }) }}
+        </span>
+        <slot name="list" v-bind="list" />
       </div>
     </li>
   </ul>
@@ -21,8 +23,9 @@
 
 <script lang="ts" setup>
 import { defineProps, ref, computed } from 'vue';
+import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 
-import Trash from './icons/Trash.vue';
+// import Trash from './icons/Trash.vue';
 import Check from './icons/Check.vue';
 
 const props = defineProps<{
@@ -40,12 +43,6 @@ listArray.value?.forEach((list) => {
 const exactMatch = computed(() => {
   return names.value.includes(props.searchQuery.toLowerCase());
 });
-
-const getList = (e: any) => {
-  console.log(e, listArray.value);
-  listArray.value?.pop();
-  // return listArray.value?.splice(e);
-};
 </script>
 
 <style lang="scss" module>
@@ -75,9 +72,6 @@ li {
     .time {
       margin-right: 2rem;
       transition: margin-right 0.5s;
-    }
-    .trash {
-      opacity: 1;
     }
   }
 }

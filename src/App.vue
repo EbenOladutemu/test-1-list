@@ -18,19 +18,24 @@
           @click="add($event)" />
       </button>
     </SearchBar>
-    <List :search-query="searchQuery" :lists="filteredList" />
+    <List :search-query="searchQuery" :lists="filteredList">
+      <template #list="{ id }">
+        <Trash :class="$style.trash" @click="deleteEntry(id)" />
+      </template>
+    </List>
   </div>
   <SortBy :lists="lists" />
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed, onUnmounted } from 'vue';
-import formatDistanceToNow from 'date-fns/formatDistanceToNow';
+import { defineComponent, ref, computed } from 'vue';
+import { setLists, getLists } from './composables/store.js';
 
 import List from './components/List.vue';
 import SearchBar from './components/SearchBar.vue';
 import Add from './components/icons/Add.vue';
 import Cancel from './components/icons/Cancel.vue';
+import Trash from './components/icons/Trash.vue';
 import SortBy from './components/SortBy.vue';
 
 export default defineComponent({
@@ -40,11 +45,12 @@ export default defineComponent({
     SearchBar,
     Add,
     Cancel,
+    Trash,
     SortBy,
   },
   setup() {
     const searchQuery = ref('');
-    const lists: any = ref(JSON.parse(localStorage.getItem('lists')));
+    let lists: any = ref(getLists());
 
     const filteredList = computed(() => {
       return lists.value.length > 0
@@ -63,11 +69,9 @@ export default defineComponent({
         lists.value.push({
           id: lists.value.length + 1,
           name: searchQuery.value,
-          time: formatDistanceToNow(new Date(Date.now()), {
-            includeSeconds: true,
-          }),
+          time: new Date(),
         });
-        localStorage.setItem('lists', JSON.stringify(lists.value));
+        setLists(lists.value);
         searchQuery.value = '';
       }
     };
@@ -78,6 +82,11 @@ export default defineComponent({
       }
     };
 
+    const deleteEntry = (e: any) => {
+      lists.value = lists.value?.filter((list: any) => list.id !== e);
+      setLists(lists.value);
+    };
+
     return {
       lists,
       searchQuery,
@@ -85,6 +94,7 @@ export default defineComponent({
       empty,
       add,
       clear,
+      deleteEntry,
     };
   },
 });
@@ -94,5 +104,18 @@ export default defineComponent({
 // Style
 .add {
   margin-left: 2rem;
+}
+.trash {
+  background-color: transparent;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+li {
+  &:hover {
+    .trash {
+      opacity: 1;
+    }
+  }
 }
 </style>
