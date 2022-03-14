@@ -19,6 +19,9 @@
         <slot name="list" v-bind="list" />
       </div>
     </li>
+    <!-- <li v-if="lists.length === 0" :class="$style['text-center']">
+      No item in list. Click add icon to add an item
+    </li> -->
   </ul>
 </template>
 
@@ -104,5 +107,9 @@ li {
   font-size: 13px;
   margin-right: -1rem;
   transition: margin-right 0.5s;
+}
+
+.text-center {
+  text-align: center;
 }
 </style>
