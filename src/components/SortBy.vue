@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts" setup>
-import { defineProps, ref } from 'vue';
+import { defineProps, ref, watch } from 'vue';
 import { setLists, setSortMethod, getSortMethod } from './../utils/store';
 
 const props = defineProps<{
@@ -60,6 +60,15 @@ const sortByMethod = (method: any) => {
     setLists(sortedLists.value);
   }
 };
+
+watch(
+  () => props.lists,
+  (newVal, oldVal) => {
+    if (newVal !== oldVal) {
+      sortedLists.value = newVal;
+    }
+  }
+);
 </script>
 
 <style lang="scss" module>

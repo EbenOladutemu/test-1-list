@@ -6,7 +6,8 @@
         <div>
           <p :class="$style.name">{{ list.name }}</p>
           <small :class="$style['serial-no']">
-            <span v-show="exactMatch"> Exact match, </span>
+            <span v-show="exactMatch">Exact match</span>
+            <span v-show="exactMatch">,</span>
             #{{ list.number }}
           </small>
         </div>
@@ -22,7 +23,7 @@
 </template>
 
 <script lang="ts" setup>
-import { defineProps, ref, computed } from 'vue';
+import { defineProps, ref, computed, watch } from 'vue';
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 
 import Check from './icons/Check.vue';
@@ -35,13 +36,26 @@ const props = defineProps<{
 const listArray = ref(props.lists);
 
 const names: any = ref([]);
-listArray.value?.forEach((list) => {
-  names.value.push(list.name.toLowerCase());
-});
+const getNames = () => {
+  listArray.value.forEach((list) => {
+    names.value.push(list.name.toLowerCase());
+  });
+};
 
 const exactMatch = computed(() => {
   return names.value.includes(props.searchQuery.toLowerCase());
 });
+
+watch(
+  // Watch for list additions and update array with new values
+  () => props.lists,
+  (newVal, oldVal) => {
+    if (newVal !== oldVal) {
+      listArray.value = newVal;
+      getNames();
+    }
+  }
+);
 </script>
 
 <style lang="scss" module>
@@ -82,7 +96,7 @@ li {
   font-size: 12px;
   color: color.$text-tertiary;
 
-  span {
+  span:first-child {
     color: color.$text-success;
   }
 }
